@@ -1,16 +1,14 @@
 using System;
 
-namespace CoreAPI.Models
+namespace CoreAPI.Dto
 {
-    public class Photo
+    public class PhotoForReturnDto
     {
         public int Id { get; set; }
         public string Url { get; set; }
         public string Description { get; set; }
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
-        public string PublicId { get; set; }  // this will store response from cloudnary (public key)
-        public virtual User User { get; set; }
-        public int UserId { get; set; }
+        public string PublicId { get; set; }
     }
 }

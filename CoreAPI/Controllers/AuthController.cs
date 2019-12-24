@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using CoreAPI.Dto;
 using CoreAPI.Models;
 using CoreAPI.Repositories;
@@ -18,10 +19,12 @@ namespace CoreAPI.Controllers
     {
         private IAuthRepository _repo; 
         private IConfiguration _config;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
             _config = config;
+            _mapper = mapper;
         }
         [HttpPost("register")]
         public async Task<IActionResult> Registration(UserForRegistrationDto userDto)
@@ -58,9 +61,13 @@ namespace CoreAPI.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateJwtSecurityToken(tokenDesc);
+            // return some more user information so that photo can be disabled on nav bar.
+            // you can create new user dto class but we are using UserForListDto now.
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
             return Ok(new
             {
-                token = tokenHandler.WriteToken(token)
+                token = tokenHandler.WriteToken(token),
+                user
             });
         }
     }

@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/_services/auth.service';
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm', {static: true}) memberEditForm: NgForm;
   user: User;
+  photoUrl: string;
 
   // for warning accidently closing edit form without saving changes
   @HostListener('window:beforeunload', ['$event'])
@@ -30,6 +31,7 @@ export class MemberEditComponent implements OnInit {
     this.route.data.subscribe(data => {
     this.user = data.user;
      });
+    this.authService.currentPhotoUrl.subscribe(a => this.photoUrl = a );
   }
   updateUser() {
     this.userService.updateUser(this.authService.decodedToken.nameid, this.user).subscribe(next => {
@@ -40,6 +42,10 @@ export class MemberEditComponent implements OnInit {
     }, error => {
         this.alertifyService.error(error);
     });
+  }
+  updateMainPhoto(photoUrl) {
+    this.user.photoUrl = photoUrl;
+
   }
 
 }

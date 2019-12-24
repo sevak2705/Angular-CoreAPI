@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using System.Net;
 using AutoMapper;
+using CoreAPI.Helpers;
 
 namespace CoreAPI
 {
@@ -59,6 +60,8 @@ namespace CoreAPI
                      //using Microsoft.OpenApi.Models;
                      c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+            //mapping appsetting to class property(way to map appsetting to class property imp)
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,8 +101,10 @@ namespace CoreAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+           // app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+           // app.UseCors(x => x.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader());
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -21,7 +21,7 @@ namespace CoreAPI.Repositories
         }
         public async Task<User> Login(string userName, string password)
         {
-            var userData = await _context.Users.FirstOrDefaultAsync(a => a.UserName == userName);
+            var userData = await _context.Users.Include(a => a.Photos).FirstOrDefaultAsync(a => a.UserName == userName);
             if (userData == null)
                 return null;
             if (!VerifyPasswordHash(password, userData.PasswordHash, userData.PasswordSalt))

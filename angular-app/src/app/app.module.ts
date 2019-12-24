@@ -7,6 +7,7 @@ import { BsDropdownModule, TabsModule } from 'ngx-bootstrap';
 // https://github.com/auth0/angular2-jwt
 import { JwtModule } from '@auth0/angular-jwt'; // this is for JWT token headers to be sent in each request
 import { NgxGalleryModule } from 'ngx-gallery';
+import { FileUploadModule } from 'ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
@@ -26,6 +27,8 @@ import { MemberListResolver } from './_resolvers/member-list.resolver';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
 import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-guard';
+import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
+
 
 
 // this is to get value from token
@@ -50,7 +53,8 @@ export class CustomHammerConfig extends HammerGestureConfig  {
       MessagesComponent,
       MemberCardComponent,
       MemberDetailComponent,
-      MemberEditComponent
+      MemberEditComponent,
+      PhotoEditorComponent
    ],
    imports: [
       BrowserModule,
@@ -68,6 +72,7 @@ export class CustomHammerConfig extends HammerGestureConfig  {
        BsDropdownModule.forRoot(),
        TabsModule.forRoot(),
        NgxGalleryModule,
+       FileUploadModule,
        RouterModule.forRoot(appRoutes)
    ],
    providers: [
